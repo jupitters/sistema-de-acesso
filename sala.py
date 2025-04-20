@@ -32,7 +32,7 @@ def iniciar_servidor():
                         else: 
                             semaphore.acquire()
                             resposta = f"Vagas disponiveis: {semaphore._value}"
-                        conn.sendall(resposta.encode()) # Envia a resposta ao cliente
+                        conn.sendall(resposta.encode())
                     elif data.decode().strip().lower() == "o":
                         if semaphore._value == 5:
                             resposta = "Sala vazia."
@@ -45,7 +45,6 @@ def iniciar_servidor():
                         conn.sendall(resposta.encode())
                     else:
                         conn.sendall(b"Mensagem invalida")
-            # Aguarda uma conexão
             
 
 if __name__ == "__main__":
