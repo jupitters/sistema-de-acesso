@@ -2,7 +2,7 @@ import socket
 from datetime import datetime
 import threading
 
-semaphore = threading.Semaphore(5)
+semaphore = threading.BoundedSemaphore(5)
 global vagas
 
 def acesso_funcionario(funcionario_id):
@@ -27,16 +27,30 @@ def iniciar_servidor():
         # threads = [threading.Thread(target=acesso_funcionario, args=(i,)) for i in range ]
         while True:
             conn, addr = s.accept()
+            
             with conn:
                 print(f"Conectado por {addr}")
                 while True:
-                    data = conn.recv(1024)
+                    data = conn.recv(1024)  
                     if not data:
                         break
-                    if data.decode().strip().lower() == "solicitacao entrada":
-                        # Obtém a data e hora atuais
-                        resposta = f"Vagas disponiveis: {5 - vagas}"
+                    if data.decode().strip().lower() == "i":
+                        if semaphore._value == 0:
+                            resposta = "Não há vagas disponiveis"
+                        else: 
+                            semaphore.acquire()
+                            resposta = f"Vagas disponiveis: {semaphore._value}"
                         conn.sendall(resposta.encode()) # Envia a resposta ao cliente
+                    elif data.decode().strip().lower() == "o":
+                        if semaphore._value == 5:
+                            resposta = "Sala vazia."
+                        else:
+                            semaphore.release()
+                            resposta = f"Vagas disponiveis: {semaphore._value}"
+                        conn.sendall(resposta.encode())
+                    elif data.decode().strip().lower() == "status":
+                        resposta = f"Vagas disponiveis: {semaphore._value}"
+                        conn.sendall(resposta.encode())
                     else:
                         conn.sendall(b"Mensagem invalida")
             # Aguarda uma conexão
