@@ -6,18 +6,19 @@ def iniciar_cliente():
     PORT = 4444        # Porta do servidor
 
     # Criando o socket TCP/IP
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))  # Conecta ao servidor
-        print("Solicitando entrada...")
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))  # Conecta ao servidor
 
-        # Envia a solicitação ao servidor
-        s.sendall(b"solicitacao entrada")
+            mensagem = input("> ")
+            # Envia a solicitação ao servidor
+            s.sendall(mensagem.encode())
 
-        # Recebe a resposta do servidor
-        data = s.recv(1024)
+            # Recebe a resposta do servidor
+            data = s.recv(1024)
 
-        # Exibe a resposta
-        print(f"Resposta do servidor: {data.decode()}")
+            # Exibe a resposta
+            print(f"Resposta do servidor: {data.decode()}")
 
 if __name__ == "__main__":
     iniciar_cliente()
