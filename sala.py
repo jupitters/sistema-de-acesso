@@ -5,14 +5,6 @@ import threading
 semaphore = threading.BoundedSemaphore(5)
 global vagas
 
-def acesso_funcionario(funcionario_id):
-    print(f"Funcionatio {funcionario_id} entrando na sala...")
-    with semaphore:
-        print(f"Funcionario {funcionario_id} entrou na sala.")
-        vagas += 1
-        threading.Event().wait(1)
-    print(f"Funcionario {funcionario_id} saiu da sala.")
-
 def iniciar_servidor():
     # Configuração do servidor
     HOST = '127.0.0.1'  # Endereço local
