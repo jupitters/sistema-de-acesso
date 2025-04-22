@@ -18,7 +18,7 @@ def iniciar_cliente():
             data = s.recv(1024)
 
             # Exibe a resposta
-            print(f"Resposta do servidor: {data.decode()}")
+            print(f"{data.decode()}")
 
 if __name__ == "__main__":
     iniciar_cliente()
