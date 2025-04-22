@@ -3,7 +3,6 @@ from datetime import datetime
 import threading
 
 semaphore = threading.BoundedSemaphore(5)
-global vagas
 
 def iniciar_servidor():
     # Configuração do servidor
