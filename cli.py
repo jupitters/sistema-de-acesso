@@ -11,8 +11,12 @@ def iniciar_cliente():
             s.connect((HOST, PORT))  # Conecta ao servidor
 
             mensagem = input("> ")
+            if not mensagem:
+                print("Mensagem invalida!")
+                continue
             # Envia a solicitação ao servidor
-            s.sendall(mensagem.encode())
+            else:
+                s.sendall(mensagem.encode())
 
             # Recebe a resposta do servidor
             data = s.recv(1024)
