@@ -48,7 +48,7 @@ def iniciar_servidor():
                         print(f"Um funcionario checou o número de vagas disponiveis: {semaphore._value}")
                         conn.sendall(resposta.encode())
                     else:
-                        conn.sendall(b"Mensagem invalida")
+                        conn.sendall(b"Mensagem invalida!")
                         print(f"Um funcionario enviou um comando invalido.")
             
 
