@@ -16,7 +16,6 @@ def iniciar_servidor():
         print(f"Sala aberta em {HOST}:{PORT}")
         print(f"Numero de lugares disponiveis: {semaphore._value}\n")
 
-        # threads = [threading.Thread(target=acesso_funcionario, args=(i,)) for i in range ]
         while True:
             conn, addr = s.accept()
             
